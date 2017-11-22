@@ -2,6 +2,8 @@ package edu.luc.cs271.myhashmap;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Map;
 import org.junit.After;
 import org.junit.Before;
