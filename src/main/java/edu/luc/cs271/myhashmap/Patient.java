@@ -10,9 +10,11 @@ public class Patient {
   }
 
   public int getInjury(){
+
     return injury;
   }
   public String getName(){
+
     return name;
   }
 
@@ -20,4 +22,6 @@ public class Patient {
   public String toString(){
     return name + " has a severity of " + injury;
   }
+
+
 }
