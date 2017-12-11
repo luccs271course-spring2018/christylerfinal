@@ -5,7 +5,6 @@ import java.util.*;
 public class Hospital {
     Scanner input = new Scanner(System.in);
     boolean nam = false;
-    boolean nam = false;
     boolean in = false;
     String patientName = null;
     int severity;
