@@ -5,6 +5,7 @@ import java.util.*;
 public class Hospital {
     Scanner input = new Scanner(System.in);
     boolean nam = false;
+    boolean nam = false;
     boolean in = false;
     String patientName = null;
     int severity;
@@ -12,7 +13,7 @@ public class Hospital {
     HashMap<Integer, String> hmap = new HashMap<>();
     ArrayList<String> list = new ArrayList<String>();
 
-    public int getInjury(){
+    public int getInjury() {
         in = false;
         while (!in) {
             try {
@@ -34,7 +35,7 @@ public class Hospital {
         return severity;
     }
 
-    public String getName(){
+    public String getName() {
         nam = false;
         while (!nam) {
             try {
@@ -49,7 +50,7 @@ public class Hospital {
         return patientName;
     }
 
-    public int getNumberOfPatients(){
+    public int getNumberOfPatients() {
         boolean number = false;
         while (!number) {
             try {
@@ -100,13 +101,14 @@ public class Hospital {
             System.out.println(s + " had a %" + chance + " chance of survival. But there was an implication and they died.");
         }
     }
-    public void getPatients(){
+
+    public void getPatients() {
         hmap.put(severity, patientName);
         list.add(patientName);
     }
 
 
-    public void treatPatient(){
+    public void treatPatient() {
         boolean what = false;
         System.out.println("--------------------------------------------------------------------------------------------------------");
         System.out.println("It is recommended to treat the patient with the highest severity since their chances of dying are higher");
@@ -125,7 +127,7 @@ public class Hospital {
                     }
                 }
 
-                    randomSurvival(key, treated);
+                randomSurvival(key, treated);
                 what = true;
             } else {
                 System.out.println("Patient was not recognized\nTry again.");
