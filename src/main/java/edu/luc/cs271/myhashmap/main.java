@@ -26,6 +26,8 @@ public class main {
                 patientName = hp.getName();
                 //forces user to enter an integer
                 severity = hp.getInjury();
+
+                hp.getPatients();
                 //Adds patient names and injury to a an arrayList, HashMap, and Priority Queues
                 list.add(patientName);
                 hmap.put(severity, patientName);
@@ -43,29 +45,9 @@ public class main {
             //Depending on the input, the patients on the list are either treated, or cleared from the list
             switch (whatDo) {
                 case 1:
-                    System.out.println("--------------------------------------------------------------------------------------------------------");
-                    System.out.println("It is recommended to treat the patient with the highest severity since their chances of dying are higher");
-                    int key = 0;
-                    String treated = null;
-                    while (!what) {
-                        System.out.println("You have the chance to treat one person, please enter their name:");
-
-                        treated = input.next().toLowerCase();
-
-                        //Uses the array list to track down the patientNames to see if the input matches anyone of them
-                        if (list.contains(treated)) {
-                            for (Map.Entry entry : hmap.entrySet()) {
-                                if (treated.equals(entry.getValue())) {
-                                    key = (int) entry.getKey();
-                                }
-                            }
-
-                            hp.randomSurvival(key, treated);
-                            what = true;
-                        } else {
-                            System.out.println("Patient was not recognized\nTry again.");
-                        }
-                    }
+                    //Prompts user to "treat" one patient from the list. Whatever patient was picked has a formula that determines their
+                    //rate of survival based on the level of their severity
+                    hp.treatPatient();
                     break;
                 case 2:
                     queue.clear();
