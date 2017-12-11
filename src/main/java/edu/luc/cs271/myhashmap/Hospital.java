@@ -1,9 +1,6 @@
 package edu.luc.cs271.myhashmap;
 
-import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Hospital {
     Scanner input = new Scanner(System.in);
@@ -13,6 +10,8 @@ public class Hospital {
     int severity;
     int n = 0;
     HashMap<Integer, String> hmap = new HashMap<>();
+    ArrayList<String> list = new ArrayList<String>();
+
     public int getInjury(){
         in = false;
         while (!in) {
@@ -101,7 +100,37 @@ public class Hospital {
             System.out.println(s + " had a %" + chance + " chance of survival. But there was an implication and they died.");
         }
     }
+    public void getPatients(){
+        hmap.put(severity, patientName);
+        list.add(patientName);
+    }
 
 
+    public void treatPatient(){
+        boolean what = false;
+        System.out.println("--------------------------------------------------------------------------------------------------------");
+        System.out.println("It is recommended to treat the patient with the highest severity since their chances of dying are higher");
+        int key = 0;
+        String treated = null;
+        while (!what) {
+            System.out.println("You have the chance to treat one person, please enter their name:");
+
+            treated = input.next().toLowerCase();
+
+            //Uses the array list to track down the patientNames to see if the input matches anyone of them
+            if (list.contains(treated)) {
+                for (Map.Entry entry : hmap.entrySet()) {
+                    if (treated.equals(entry.getValue())) {
+                        key = (int) entry.getKey();
+                    }
+                }
+
+                    randomSurvival(key, treated);
+                what = true;
+            } else {
+                System.out.println("Patient was not recognized\nTry again.");
+            }
+        }
+    }
 
 }

@@ -1,27 +1,23 @@
 package edu.luc.cs271.myhashmap;
 
 public class Patient {
-  private int injury;
-  private String name;
+    private int injury;
+    private String name;
 
-  public Patient(String name, int injury){
-    this.injury = injury;
-    this.name = name;
-  }
+    public Patient(String name, int injury) {
+        this.injury = injury;
+        this.name = name;
+    }
 
-  public int getInjury(){
+    public int getInjury() {
 
-    return injury;
-  }
-  public String getName(){
+        return injury;
+    }
 
-    return name;
-  }
-
-  @Override
-  public String toString(){
-    return name + " has a severity of " + injury;
-  }
+    @Override
+    public String toString() {
+        return name + " has a severity of " + injury;
+    }
 
 
 }
