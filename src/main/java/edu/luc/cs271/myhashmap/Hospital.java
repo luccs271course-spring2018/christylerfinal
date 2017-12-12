@@ -1,10 +1,10 @@
 package edu.luc.cs271.myhashmap;
 
 import java.util.*;
+import java.util.Map.Entry;
 
 public class Hospital {
     Scanner input = new Scanner(System.in);
-    main m = new main();
     DescendingByCount sort = new DescendingByCount();
     String patientName = null;
     int numberOfPatients = getNumberOfPatients();
@@ -22,6 +22,7 @@ public class Hospital {
                 System.out.println("Please enter the severity of the patients injury.");
                 System.out.println("1 being lowest and 10 being the highest severity:");
                 severity = input.nextInt();
+                //Scale of 10 used to limit misrepresentations (some people may be thinking on a different scale, like out of 100)
                 if (severity > 0 && severity < 11) {
                     in = true;
                 } else {
@@ -65,6 +66,7 @@ public class Hospital {
                 input.next();
             }
         }
+
         return n;
     }
 
@@ -74,18 +76,20 @@ public class Hospital {
         System.out.println("------------------------------------------------------------------");
         System.out.println("What would you like to do? (please enter the corresponding number)");
         System.out.println("1. Treat patients");
-        System.out.println("2. Clear list of patients");
+        System.out.println("2. Print list of patients");
+        System.out.println("3. Add a patient");
+        System.out.println("4. Clear list of patients");
 
         while (!valid) {
             try {
                 whatDo = input.nextInt();
-                if (whatDo > 0 && whatDo < 3) {
+                if (whatDo > 0 && whatDo < 5) {
                     valid = true;
                 } else {
-                    System.out.println("Please enter 1 or 2:");
+                    System.out.println("Please enter a number 1-4");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Input was not recognized, please enter 1 or 2.");
+                System.out.println("Input was not recognized, please enter a number 1-4");
                 input.next();
             }
         }
@@ -112,29 +116,37 @@ public class Hospital {
 
     public void treatPatient() {
         boolean what = false;
-        System.out.println("--------------------------------------------------------------------------------------------------------");
-        System.out.println("It is recommended to treat the patient with the highest severity since their chances of dying are higher");
         int key = 0;
         String treated = null;
-        while (!what) {
-            System.out.println("You have the chance to treat one person, please enter their name:");
+      if(list.size() > 0) {
+          System.out.println("--------------------------------------------------------------------------------------------------------");
+          System.out.println("It is recommended to treat the patient with the highest severity since their chances of dying are higher");
 
-            treated = input.next().toLowerCase();
+          while (!what) {
+              System.out.println("Enter a patient name: ");
 
-            //Uses the array list to track down the patientNames to see if the input matches anyone of them
-            if (list.contains(treated)) {
-                for (Map.Entry entry : hmap.entrySet()) {
-                    if (treated.equals(entry.getValue())) {
-                        key = (int) entry.getKey();
-                    }
-                }
+              treated = input.next().toLowerCase();
 
-                randomSurvival(key, treated);
-                what = true;
-            } else {
-                System.out.println("Patient was not recognized\nTry again.");
-            }
-        }
+              //Uses the array list to track down the patientNames to see if the input matches anyone of them
+              if (list.contains(treated)) {
+                  for (Map.Entry entry : hmap.entrySet()) {
+                      if (treated.equals(entry.getValue())) {
+                          key = (int) entry.getKey();
+                      }
+                  }
+
+                  randomSurvival(key, treated);
+                  hmap.remove(key, treated);
+                  list.remove(treated);
+                  what = true;
+              } else {
+                  System.out.println("Patient was not recognized\nTry again.");
+              }
+          }
+      } else{
+          System.out.println("There are no more patients to treat.");
+      }
+
     }
 
     public void printQueue() {
@@ -142,15 +154,29 @@ public class Hospital {
         for (int i = 0; i < numberOfPatients; i++) {
             System.out.println(queue.poll());
         }
-
     }
 
     public void clearList() {
+        //Clears all data structures
         System.out.println("-----------------------------");
         queue.clear();
         hmap.clear();
         list.clear();
         System.out.println("Patients cleared from list...");
+    }
+    public void printList(){
+        Set<Entry<Integer, String>> hashSet= hmap.entrySet();
+        System.out.println("Patients:");
+        for(Entry entry:hashSet ) {
+            System.out.println(entry.getValue() + ", " + entry.getKey());
+        }
+    }
+
+    public void addPatient(){
+        getName();
+        getInjury();
+        hmap.put(severity, patientName);
+        list.add(patientName);
     }
 
 }
