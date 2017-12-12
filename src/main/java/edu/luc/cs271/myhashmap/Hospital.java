@@ -4,16 +4,18 @@ import java.util.*;
 
 public class Hospital {
     Scanner input = new Scanner(System.in);
-    boolean nam = false;
-    boolean in = false;
+    main m = new main();
+    DescendingByCount sort = new DescendingByCount();
     String patientName = null;
-    int severity;
+    int numberOfPatients = getNumberOfPatients();
+    int severity = 0;
     int n = 0;
     HashMap<Integer, String> hmap = new HashMap<>();
     ArrayList<String> list = new ArrayList<String>();
+    PriorityQueue<Patient> queue = new PriorityQueue<Patient>(numberOfPatients, sort);
 
     public int getInjury() {
-        in = false;
+        boolean in = false;
         while (!in) {
             try {
                 //add patient severity
@@ -35,7 +37,7 @@ public class Hospital {
     }
 
     public String getName() {
-        nam = false;
+        boolean nam = false;
         while (!nam) {
             try {
                 System.out.println("Please enter the patient's first name (Please define any spaces with '_' :");
@@ -104,6 +106,7 @@ public class Hospital {
     public void getPatients() {
         hmap.put(severity, patientName);
         list.add(patientName);
+        queue.offer(new Patient(patientName, severity));
     }
 
 
@@ -132,6 +135,22 @@ public class Hospital {
                 System.out.println("Patient was not recognized\nTry again.");
             }
         }
+    }
+
+    public void printQueue() {
+        //Prints the patients with their severities from greatest to least
+        for (int i = 0; i < numberOfPatients; i++) {
+            System.out.println(queue.poll());
+        }
+
+    }
+
+    public void clearList() {
+        System.out.println("-----------------------------");
+        queue.clear();
+        hmap.clear();
+        list.clear();
+        System.out.println("Patients cleared from list...");
     }
 
 }
