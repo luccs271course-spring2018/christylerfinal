@@ -33,8 +33,8 @@ public class main {
             hp.treatPatient();
             break;
           case 2:
-            // Treats all of the patients at one time (fifo)
-            hp.treatAll();
+            // Treats the last patient that was entered
+              hp.treatLast();
             break;
           case 3:
             // Prints the patients currently in the list

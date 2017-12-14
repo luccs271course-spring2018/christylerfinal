@@ -14,10 +14,10 @@ public class Hospital {
   int n = 0;
 
   // Data Structures
-  HashMap<Integer, String> hmap = new HashMap<>();
+  HashMap<Integer, String> hmap = new HashMap<>(); //takes in input from patient names and severity
   ArrayList<String> slist = new ArrayList<>(); // Represents the list for patient names
   ArrayList<Integer> ilist = new ArrayList<>(); // Represents the list for injury severities
-  PriorityQueue<Patient> queue = new PriorityQueue<Patient>(numberOfPatients, sort);
+  PriorityQueue<Patient> queue = new PriorityQueue<Patient>(numberOfPatients, sort); //sorts the inputs from greatest to least
   Stack stack = new Stack();
 
   public int getInjury() {
@@ -42,6 +42,7 @@ public class Hospital {
       }
     }
     // Returns a valid severity
+
     return severity;
   }
 
@@ -55,7 +56,6 @@ public class Hospital {
             "Please enter the patient's first name (Please define any spaces with '_' :");
         // All names are set to lowercase for simplicity.
         patientName = input.next().toLowerCase();
-        stack.push(patientName);
         nam = true;
       } catch (InputMismatchException e) {
         System.out.println("Enter a name using letters");
@@ -93,7 +93,7 @@ public class Hospital {
     System.out.println("------------------------------------------------------------------");
     System.out.println("What would you like to do? (please enter the corresponding number)");
     System.out.println("1. Treat specific patients");
-    System.out.println("2. Treat all patients at once");
+    System.out.println("2. Last patient entered is important, treat them first");
     System.out.println("3. Print list of patients");
     System.out.println("4. Add a patient");
     System.out.println("5. Clear list of patients");
@@ -138,6 +138,7 @@ public class Hospital {
     slist.add(patientName);
     ilist.add(severity);
     queue.offer(new Patient(patientName, severity));
+    stack.add(patientName);
   }
 
   // Allows user to treat a specific patient
@@ -197,6 +198,7 @@ public class Hospital {
     hmap.clear();
     slist.clear();
     ilist.clear();
+    stack.clear();
     System.out.println("Patients cleared from list...");
   }
 
@@ -214,6 +216,7 @@ public class Hospital {
     } else {
       System.out.println("There are no patients on the list");
     }
+
   }
 
   // Allows user to add a patient to the list.
@@ -223,29 +226,30 @@ public class Hospital {
     hmap.put(severity, patientName);
     slist.add(patientName);
     ilist.add(severity);
+    stack.add(patientName);
   }
 
+
   // Allows user to treat all of the patients at one time with their respective odds of survival
-  public void treatAll() {
+  public void treatLast() {
     int key = 0;
     if (slist.size() > 0) {
-      for (int i = 0; i <= slist.size(); i++) {
-        // Checks the top of the stack and uses that to treat each patient one by one.
-        String treated = String.valueOf(stack.peek());
+        // Checks the top of the stack and uses that to treat the most recent patient
+        String treated = (String) stack.peek();
         for (Map.Entry entry : hmap.entrySet()) {
           if (treated.equals(entry.getValue())) {
             key = (int) entry.getKey();
           }
         }
-
-        randomSurvival(key, treated);
-        stack.pop();
+        //Removes the specific patient from the list after treatment
         hmap.remove(key, treated);
         slist.remove(treated);
-        ilist.remove(ilist.indexOf(key));
-      }
+        ilist.remove(new Integer(key));
+        stack.pop();
+        randomSurvival(key, treated);
     } else {
       System.out.println("There are no patients to treat.");
     }
   }
+
 }
