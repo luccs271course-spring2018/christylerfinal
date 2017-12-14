@@ -14,10 +14,11 @@ public class Hospital {
   int n = 0;
 
   // Data Structures
-  HashMap<Integer, String> hmap = new HashMap<>(); //takes in input from patient names and severity
+  HashMap<Integer, String> hmap = new HashMap<>(); // takes in input from patient names and severity
   ArrayList<String> slist = new ArrayList<>(); // Represents the list for patient names
   ArrayList<Integer> ilist = new ArrayList<>(); // Represents the list for injury severities
-  PriorityQueue<Patient> queue = new PriorityQueue<Patient>(numberOfPatients, sort); //sorts the inputs from greatest to least
+  PriorityQueue<Patient> queue =
+      new PriorityQueue<Patient>(numberOfPatients, sort); // sorts the inputs from greatest to least
   Stack stack = new Stack();
 
   public int getInjury() {
@@ -216,7 +217,6 @@ public class Hospital {
     } else {
       System.out.println("There are no patients on the list");
     }
-
   }
 
   // Allows user to add a patient to the list.
@@ -229,27 +229,25 @@ public class Hospital {
     stack.add(patientName);
   }
 
-
   // Allows user to treat all of the patients at one time with their respective odds of survival
   public void treatLast() {
     int key = 0;
     if (slist.size() > 0) {
-        // Checks the top of the stack and uses that to treat the most recent patient
-        String treated = (String) stack.peek();
-        for (Map.Entry entry : hmap.entrySet()) {
-          if (treated.equals(entry.getValue())) {
-            key = (int) entry.getKey();
-          }
+      // Checks the top of the stack and uses that to treat the most recent patient
+      String treated = (String) stack.peek();
+      for (Map.Entry entry : hmap.entrySet()) {
+        if (treated.equals(entry.getValue())) {
+          key = (int) entry.getKey();
         }
-        //Removes the specific patient from the list after treatment
-        hmap.remove(key, treated);
-        slist.remove(treated);
-        ilist.remove(new Integer(key));
-        stack.pop();
-        randomSurvival(key, treated);
+      }
+      // Removes the specific patient from the list after treatment
+      randomSurvival(key, treated);
+      hmap.remove(key, treated);
+      slist.remove(treated);
+      ilist.remove(new Integer(key));
+      stack.pop();
     } else {
       System.out.println("There are no patients to treat.");
     }
   }
-
 }

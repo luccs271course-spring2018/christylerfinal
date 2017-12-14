@@ -34,7 +34,7 @@ public class main {
             break;
           case 2:
             // Treats the last patient that was entered
-              hp.treatLast();
+            hp.treatLast();
             break;
           case 3:
             // Prints the patients currently in the list
