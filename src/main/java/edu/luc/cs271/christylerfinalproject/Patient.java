@@ -1,4 +1,4 @@
-package edu.luc.cs271.myhashmap;
+package edu.luc.cs271.christylerfinalproject;
 
 public class Patient {
   private int injury;
